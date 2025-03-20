@@ -87,7 +87,7 @@ if __name__ == '__main__':
     baby_step(g, m, p, save)
     inverse_remainder: int = baby_step(g_inverse, m, p, discard)
     key: int = giant_step(h, p, m, inverse_remainder)
-    print("gˣ ≡",h, "mod",p)
+    print(g,"ˣ ≡",h, "mod",p)
     print("x = ",sum(d[key]))
 
 
