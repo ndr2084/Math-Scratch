@@ -67,12 +67,6 @@ def extended_euclidean_algorithm_helper(a: int, b: int, s_1: int, s_2: int, t_1:
 
     return extended_euclidean_algorithm_helper(a, b, s_2, s_3, t_2, t_3)
 
-
-
-
-
-
-
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     ##NOTE:
@@ -80,9 +74,12 @@ if __name__ == '__main__':
         #VALUE := the exponents values i and/or m*j
     save = 1
     discard = 0
+
+    ##MODIFY h,g,p BELOW TO CALCULATE ###
     h: int = 2213
     p: int = 3571
     g: int = 650
+
 
     g_inverse: int = multiplicative_inverse(p, g)
     m: int = giant_step_interval(p)
@@ -90,12 +87,8 @@ if __name__ == '__main__':
     baby_step(g, m, p, save)
     inverse_remainder: int = baby_step(g_inverse, m, p, discard)
     key: int = giant_step(h, p, m, inverse_remainder)
-    print(
-        "key: " + str(key) + "\n" +
-        "value: " + str(d[key]) + "\n" +
-        "value sum: " + str(sum(d[key]))
-    )
-    print("Therefore x = ",sum(d[key]), "for (",g,")^x = ", h, "mod ",p )
+    print("gˣ ≡",h, "mod",p)
+    print("x = ",sum(d[key]))
 
 
 
