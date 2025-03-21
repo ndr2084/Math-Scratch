@@ -5,8 +5,8 @@ from collections import defaultdict
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 
-def giant_step_interval(x: int) -> int:
-    return math.ceil(math.sqrt(x))
+def giant_step_interval(n: int) -> int:
+    return math.ceil(math.sqrt(n))
 
 def baby_step(g: int, m: int, p, flag: int) -> int:
     temp: int = 1
@@ -21,7 +21,7 @@ def baby_step(g: int, m: int, p, flag: int) -> int:
     if flag == 0:
         return temp
 
-def multiplicative_inverse(a, b):
+def multiplicative_inverse(a: int, b: int) -> int:
     if a - b < 0:
         a,b = b,a
     b_inverse = extended_euclidean_algorithm(a,b)[1]
@@ -30,17 +30,17 @@ def multiplicative_inverse(a, b):
     return b_inverse
 
 
-def giant_step(h_inner, p_inner, m_inner, m_inverse_remainder):
+def giant_step(h: int, p: int, m: int, inverse: int) -> int:
     key: int = 0
-    mir_copy = m_inverse_remainder
-    for i in range(1, m_inner, 1):
-        answer = m_inverse_remainder * h_inner % p_inner
-        d[answer].append(m_inner * i)
+    inverse_copy = inverse
+    for i in range(1, m, 1):
+        answer = inverse * h % p
+        d[answer].append(m * i)
         if d[answer].__len__() > 1:
             return answer
-        m_inverse_remainder = m_inverse_remainder * mir_copy
-        while m_inverse_remainder > p_inner:
-            m_inverse_remainder = m_inverse_remainder - p_inner
+        inverse = inverse * inverse_copy
+        while inverse > p:
+            inverse = inverse - p
     return key
 
 def extended_euclidean_algorithm(a: int, b: int):
@@ -48,6 +48,7 @@ def extended_euclidean_algorithm(a: int, b: int):
     if a - b < 0:
         a,b = b,a
     return extended_euclidean_algorithm_helper(a, b, s_1, s_2, t_1, t_2) # b <= a
+
 def extended_euclidean_algorithm_helper(a: int, b: int, s_1: int, s_2: int, t_1: int, t_2: int):
     q: int = 0
     if b == 0:
@@ -80,10 +81,10 @@ if __name__ == '__main__':
     p: int = 3571
     g: int = 650
 
+    d = defaultdict(list)
 
     g_inverse: int = multiplicative_inverse(p, g)
     m: int = giant_step_interval(p)
-    d = defaultdict(list)
     baby_step(g, m, p, save)
     inverse_remainder: int = baby_step(g_inverse, m, p, discard)
     key: int = giant_step(h, p, m, inverse_remainder)
