@@ -4,17 +4,29 @@ from cryptography import giant_step_baby_step
 from cryptography.giant_step_baby_step import multiplicative_inverse
 
 
-def euclidean_algorithm(a: int, b: int) -> int:
+def gcd(a: int, b: int) -> int:
+    if a < b:
+        a,b = b,a
 
-    if a > b: # the remainder is larger than 0
-        return euclidean_algorithm(a-b, b)
+    if a == 0 or b == 0:
+        return abs(a + b)
 
-    return a
+    while a >= b:
+        a = a - b
+
+    if a == 1:
+        return a
+    else:
+        return gcd(b,a)
+
+
+
 
 def pairwise_coprime(S: list) -> bool:
     combo = tuple(combinations(S, 2))
     for i in range(0, len(combo), 1):
-        if euclidean_algorithm(combo[i][0], combo[i][1]) > 1:
+        if gcd(combo[i][0], combo[i][1]) > 1:
+            print(combo[i][0], combo[i][1])
             return False
     return True
 
@@ -43,13 +55,15 @@ def CRT_result(ai: list, Mi:list, Mi_inverse: list, M: int) -> int:
     for i in range(0, len(ai), 1):
         result = result + (ai[i] * Mi[i] * Mi_inverse[i])
     print(result,"mod",M)
-    return euclidean_algorithm(result, M)
+    while(result > M):
+        result = result - M
+    return result
 
 
 
 
 if __name__ == "__main__":
-
+    print(gcd(236, 108))
     mi = [3, 5, 7]
     ai = [2,3,2]
     print(pairwise_coprime(mi))

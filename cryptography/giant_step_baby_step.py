@@ -43,7 +43,7 @@ def giant_step(h: int, p: int, m: int, inverse: int) -> int:
 
 def extended_euclidean_algorithm(a: int, b: int):
     s_1 = 1; s_2 = 0; t_1 = 0; t_2 = 1
-    return extended_euclidean_algorithm_helper(a, b, s_1, s_2, t_1, t_2) # b <= a
+    return extended_euclidean_algorithm_helper(a, b, s_1, s_2, t_1, t_2)
 
 def extended_euclidean_algorithm_helper(a: int, b: int, s_1: int, s_2: int, t_1: int, t_2: int):
     q: int = 0
