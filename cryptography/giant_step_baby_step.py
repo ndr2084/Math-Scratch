@@ -22,8 +22,6 @@ def baby_step(g: int, m: int, p, flag: int) -> int:
         return temp
 
 def multiplicative_inverse(a: int, b: int) -> int:
-    if a - b < 0:
-        a,b = b,a
     b_inverse = extended_euclidean_algorithm(a,b)[1]
     if b_inverse < 0:
         return a + b_inverse
@@ -45,12 +43,14 @@ def giant_step(h: int, p: int, m: int, inverse: int) -> int:
 
 def extended_euclidean_algorithm(a: int, b: int):
     s_1 = 1; s_2 = 0; t_1 = 0; t_2 = 1
-    if a - b < 0:
-        a,b = b,a
     return extended_euclidean_algorithm_helper(a, b, s_1, s_2, t_1, t_2) # b <= a
 
 def extended_euclidean_algorithm_helper(a: int, b: int, s_1: int, s_2: int, t_1: int, t_2: int):
     q: int = 0
+
+    if a == b:
+        raise ValueError("Multiplicative inverse does not exist for multiplicative_inverse(a,b)")
+
     if b == 0:
         return [1,0]
 
@@ -65,7 +65,6 @@ def extended_euclidean_algorithm_helper(a: int, b: int, s_1: int, s_2: int, t_1:
     if  b == 1:
         result = [s_3, t_3]
         return result
-
     return extended_euclidean_algorithm_helper(a, b, s_2, s_3, t_2, t_3)
 
 # Press the green button in the gutter to run the script.
@@ -82,8 +81,8 @@ if __name__ == '__main__':
     g: int = 650
 
     d = defaultdict(list)
-
-    g_inverse: int = multiplicative_inverse(p, g)
+    g_inverse: int = multiplicative_inverse(3 , 35) # 1st arg m, 2nd arg a
+    print("inverse",g_inverse)
     m: int = giant_step_interval(p)
     baby_step(g, m, p, save)
     inverse_remainder: int = baby_step(g_inverse, m, p, discard)
