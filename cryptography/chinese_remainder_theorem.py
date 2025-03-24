@@ -1,9 +1,5 @@
-from collections import defaultdict
-from itertools import permutations, combinations
-from cryptography import giant_step_baby_step
+from itertools import combinations
 from cryptography.giant_step_baby_step import multiplicative_inverse
-from functools import reduce
-import operator
 
 
 def gcd(a: int, b: int) -> int:
