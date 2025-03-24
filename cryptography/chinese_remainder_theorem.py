@@ -17,15 +17,15 @@ def pairwise_coprime(S: list, ai: list) -> bool:
     for i in range(0, len(combo), 1):
         result = gcd(combo[i][0], combo[i][1])
         if result > 1:
-            print(f"{combo[i][0]} and {combo[i][1]} aren't coprime. Checking if solution exists...")
-            solution_exists(result, ai)
+            print(f"gcd({combo[i][0]}, {combo[i][1]}) = {result}. Checking if solution exists...")
+            solution_exists(result, i, ai)
             #raise ValueError(f"values aren't pairwise coprime. gcd({combo[i][0]}, {combo[i][1]}) = {result}")
     return True
 
-def solution_exists(result: int, ai: list) -> bool:
+#TODO: this is scuffed and only works when len(ai) is 2. Consider combining ai and mi into a k:v pair
+def solution_exists(result: int, i: int, ai: list) -> bool:
     difference: int = 0
-    for i in range(0, len(ai) - 1, 1):
-        difference = difference + abs(ai[i] - ai[i+1])
+    difference = difference + abs(ai[i] - ai[i+1])
     if difference % result == 0:
         print(f"{difference} | {result} is true")
         return True
