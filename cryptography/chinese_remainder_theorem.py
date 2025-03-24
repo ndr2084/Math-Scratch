@@ -12,13 +12,24 @@ def gcd(a: int, b: int) -> int:
     while a >= b:
         a = a - b
     return gcd(b,a)
-def pairwise_coprime(S: list) -> bool:
+def pairwise_coprime(S: list, ai: list) -> bool:
     combo = tuple(combinations(S, 2))
     for i in range(0, len(combo), 1):
         result = gcd(combo[i][0], combo[i][1])
         if result > 1:
-            raise ValueError(f"values aren't pairwise coprime. gcd({combo[i][0]}, {combo[i][1]}) = {result}")
+            print(f"{combo[i][0]} and {combo[i][1]} aren't coprime. Checking if solution exists...")
+            solution_exists(result, ai)
+            #raise ValueError(f"values aren't pairwise coprime. gcd({combo[i][0]}, {combo[i][1]}) = {result}")
     return True
+
+def solution_exists(result: int, ai: list) -> bool:
+    difference: int = 0
+    for i in range(0, len(ai) - 1, 1):
+        difference = difference + abs(ai[i] - ai[i+1])
+    if difference % result == 0:
+        print(f"{difference} | {result} is true")
+        return True
+    raise ValueError(f" {result} | {difference} is false. Thus, no solution exists")
 
 def modulo_M(S: list) -> int:
     M: int = 1
@@ -52,9 +63,9 @@ def CRT_result(ai: list, Mi:list, Mi_inverse: list, M: int) -> int:
     return result
 
 if __name__ == "__main__":
-    mi = [43,49,71]
-    ai = [37,22,18]
-    pairwise_coprime(mi)
+    mi = [451,697]
+    ai = [133,237]
+    pairwise_coprime(mi, ai)
     M = modulo_M(mi)
     Mi = modulo_Mi(mi, M)
     Mi_inverse = modulo_Mi_inverse(Mi, mi)
