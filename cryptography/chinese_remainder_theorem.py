@@ -37,7 +37,7 @@ def modulo_Mi(S: list, M: int) -> list:
 def modulo_Mi_inverse(Mi: list, mi: list) -> list:
     Mi_inverse = []
     for i in range(0, len(Mi), 1):
-        Mi_inverse.append(multiplicative_inverse(mi[i], Mi[i])) #mi is first argument, Mi is second
+        Mi_inverse.append(multiplicative_inverse(mi[i], Mi[i])) #mi is 1st argument, Mi is 2nd
         print(Mi_inverse[i] ,"*", Mi[i], "≡", "1 mod", mi[i])
     print("Thus, M_inverse =",Mi_inverse)
     return Mi_inverse
