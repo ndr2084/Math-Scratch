@@ -2,6 +2,8 @@ from collections import defaultdict
 from itertools import permutations, combinations
 from cryptography import giant_step_baby_step
 from cryptography.giant_step_baby_step import multiplicative_inverse
+from functools import reduce
+import operator
 
 
 def gcd(a: int, b: int) -> int:
@@ -13,66 +15,51 @@ def gcd(a: int, b: int) -> int:
 
     while a >= b:
         a = a - b
-
-    if a == 1:
-        return a
-    else:
-        return gcd(b,a)
-
-
-
-
+    return gcd(b,a)
 def pairwise_coprime(S: list) -> bool:
     combo = tuple(combinations(S, 2))
     for i in range(0, len(combo), 1):
-        if gcd(combo[i][0], combo[i][1]) > 1:
-            print(combo[i][0], combo[i][1])
-            return False
+        result = gcd(combo[i][0], combo[i][1])
+        if result > 1:
+            raise ValueError(f"values aren't pairwise coprime. gcd({combo[i][0]}, {combo[i][1]}) = {result}")
     return True
 
 def modulo_M(S: list) -> int:
     M: int = 1
     for i in range(0,len(S), 1):
         M = M * S[i]
+    print(f"Product of all members of the set of modulo {S} is M = {M} ")
     return M
 
 def modulo_Mi(S: list, M: int) -> list:
     Mi = []
     for i in range(0, len(S), 1):
         Mi.append( (M//S[i]))
+        print(f"M/m{i} = {Mi[i]}")
     return Mi
 
-def modulo_Mi_inverse(S: list, M: list) -> list:
+def modulo_Mi_inverse(Mi: list, mi: list) -> list:
     Mi_inverse = []
     for i in range(0, len(Mi), 1):
-        #print(S[i],"", M[i])
-        Mi_inverse.append(multiplicative_inverse(M[i], S[i]))
-   # print(Mi_inverse)
+        Mi_inverse.append(multiplicative_inverse(mi[i], Mi[i])) #mi is first argument, Mi is second
+        print(Mi_inverse[i] ,"*", Mi[i], "≡", "1 mod", mi[i])
+    print("Thus, M_inverse =",Mi_inverse)
     return Mi_inverse
 
 def CRT_result(ai: list, Mi:list, Mi_inverse: list, M: int) -> int:
     result: int = 0
     for i in range(0, len(ai), 1):
         result = result + (ai[i] * Mi[i] * Mi_inverse[i])
-    print(result,"mod",M)
     while(result > M):
         result = result - M
+    print("Final result:", result, "mod", M)
     return result
 
-
-
-
 if __name__ == "__main__":
-    print(gcd(236, 108))
-    mi = [3, 5, 7]
-    ai = [2,3,2]
-    print(pairwise_coprime(mi))
+    mi = [43,49,71]
+    ai = [37,22,18]
+    pairwise_coprime(mi)
     M = modulo_M(mi)
-    print(M)
     Mi = modulo_Mi(mi, M)
-    print(Mi)
     Mi_inverse = modulo_Mi_inverse(Mi, mi)
-    print(Mi_inverse)
-    result = CRT_result(ai, Mi, Mi_inverse, M)
-    print(result)
-
+    CRT_result(ai, Mi, Mi_inverse, M)

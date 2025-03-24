@@ -49,7 +49,7 @@ def extended_euclidean_algorithm_helper(a: int, b: int, s_1: int, s_2: int, t_1:
     q: int = 0
 
     if a == b:
-        raise ValueError("Multiplicative inverse does not exist for multiplicative_inverse(a,b)")
+        raise ValueError(f"Multiplicative inverse does not exist for multiplicative_inverse(a,b)")
 
     if b == 0:
         return [1,0]
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     g: int = 650
 
     d = defaultdict(list)
-    g_inverse: int = multiplicative_inverse(3 , 35) # 1st arg m, 2nd arg a
+    g_inverse: int = multiplicative_inverse(p , g) # 1st arg m, 2nd arg a
     print("inverse",g_inverse)
     m: int = giant_step_interval(p)
     baby_step(g, m, p, save)
