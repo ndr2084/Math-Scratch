@@ -47,21 +47,16 @@ def extended_euclidean_algorithm(a: int, b: int):
 
 def extended_euclidean_algorithm_helper(a: int, b: int, s_1: int, s_2: int, t_1: int, t_2: int):
     q: int = 0
-
     if a == b:
         raise ValueError(f"Multiplicative inverse does not exist for multiplicative_inverse(a,b)")
-
     if b == 0:
         return [1,0]
-
     while a > b:
         a = a - b
         q = q + 1
-
     a,b = b,a
     t_3 = t_1 - (t_2 * q)
     s_3 = s_1 - (s_2 * q)
-
     if  b == 1:
         result = [s_3, t_3]
         return result

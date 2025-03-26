@@ -1,17 +1,15 @@
 from itertools import combinations
 from cryptography.giant_step_baby_step import multiplicative_inverse
 
-
 def gcd(a: int, b: int) -> int:
     if a < b:
         a,b = b,a
-
     if a == 0 or b == 0:
         return abs(a + b)
-
     while a >= b:
         a = a - b
     return gcd(b,a)
+
 def pairwise_coprime(S: list, ai: list) -> bool:
     combo = tuple(combinations(S, 2))
     for i in range(0, len(combo), 1):
@@ -42,7 +40,7 @@ def modulo_Mi(S: list, M: int) -> list:
     Mi = []
     for i in range(0, len(S), 1):
         Mi.append( (M//S[i]))
-        print(f"M/m{i} = {Mi[i]}")
+        print(f"M/m{i+1} = {Mi[i]}")
     return Mi
 
 def modulo_Mi_inverse(Mi: list, mi: list) -> list:
@@ -62,11 +60,15 @@ def CRT_result(ai: list, Mi:list, Mi_inverse: list, M: int) -> int:
     print("Final result:", result, "mod", M)
     return result
 
-if __name__ == "__main__":
-    mi = [451,697]
-    ai = [133,237]
+def compute_CRT(ai: list, mi: list):
     pairwise_coprime(mi, ai)
     M = modulo_M(mi)
     Mi = modulo_Mi(mi, M)
     Mi_inverse = modulo_Mi_inverse(Mi, mi)
     CRT_result(ai, Mi, Mi_inverse, M)
+
+if __name__ == "__main__":
+    mi = [7,449]
+    ai = [1, 40]
+    compute_CRT(ai, mi)
+
