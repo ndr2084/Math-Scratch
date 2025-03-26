@@ -1,9 +1,5 @@
-# This is a sample Python script.
 import math
 from collections import defaultdict
-# Press Ctrl+F5 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
 
 def giant_step_interval(n: int) -> int:
     return math.ceil(math.sqrt(n))
@@ -84,8 +80,3 @@ if __name__ == '__main__':
     key: int = giant_step(h, p, m, inverse_remainder)
     print(g,"ˣ ≡",h, "mod",p)
     print("x = ",sum(d[key]))
-
-
-
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
