@@ -1,9 +1,5 @@
 from collections import defaultdict
-from email.policy import default
 from math import sqrt
-
-from numpy.core.defchararray import upper
-
 from chinese_remainder_theorem import compute_CRT
 
 def prime_factors(n: int) -> list:
@@ -12,8 +8,6 @@ def prime_factors(n: int) -> list:
     prime_factors_list = []
     for key, value in prime_factors_helper(n, prime_factors_dict).items():
         prime_factors_list.append(key ** value)
-
-    print (prime_factors_list)
     return prime_factors_list
 
 def prime_factors_helper(n: int, prime_factors_dict: dict) -> dict:
@@ -34,17 +28,28 @@ def squares_mod_m(a: int, prime_factors_list: list) -> list:
         while (x ** 2) % prime_factors_list[i] != a % prime_factors_list[i]:
             x += 1
         squares_mod_m_list.append(x)
+        x = 0
     return squares_mod_m_list
 
-#TODO: only calculates 1 root at the moment; update so all roots are calculated
-#TODO: HINT- you can probably do the above all in the function below!
 def compute_square_root_modulo(mi, ai):
-    compute_CRT(ai, mi)
+    neg_ai = []
+    for i in range(0, len(ai), 1):
+        neg_ai.append(mi[i] - ai[i])
+    ai_total = []
+    for i in range(0, len(ai), 1):
+        ai_total.append((ai[i],neg_ai[i]))
+
+    #this is so ugly and I hate it but damnit it works
+    for i in range(0, 2**len(ai), 1):
+        temp = []
+        combination = format(i, f'0{len(ai)}b')
+        for j in range(0, len(ai), 1):
+            temp.append(ai_total[j][int(combination[j])])
+        print(compute_CRT(temp,mi))
 
 #TODO: doesn't fail gracefully. Do unit testing
 if __name__ == "__main__":
     a = 813
     mi = prime_factors(868)
-    print(mi)
     ai = squares_mod_m(a, mi)
     compute_square_root_modulo(mi, ai)

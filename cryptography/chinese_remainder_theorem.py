@@ -40,7 +40,7 @@ def modulo_Mi(S: list, M: int) -> list:
     Mi = []
     for i in range(0, len(S), 1):
         Mi.append( (M//S[i]))
-        print(f"M/m{i+1} = {Mi[i]}")
+        print(f"M{i} = M/m{i+1} = {M}/{S[i]} = {Mi[i]}")
     return Mi
 
 def modulo_Mi_inverse(Mi: list, mi: list) -> list:
@@ -48,7 +48,8 @@ def modulo_Mi_inverse(Mi: list, mi: list) -> list:
     for i in range(0, len(Mi), 1):
         Mi_inverse.append(multiplicative_inverse(mi[i], Mi[i])) #mi is 1st argument, Mi is 2nd
         print(Mi_inverse[i] ,"*", Mi[i], "≡", "1 mod", mi[i])
-    print("Thus, M_inverse =",Mi_inverse)
+    for i in range(0, len(Mi), 1):
+        print(f"M{i}_inverse = {Mi_inverse[i]}")
     return Mi_inverse
 
 def CRT_result(ai: list, Mi:list, Mi_inverse: list, M: int) -> int:
@@ -57,15 +58,15 @@ def CRT_result(ai: list, Mi:list, Mi_inverse: list, M: int) -> int:
         result = result + (ai[i] * Mi[i] * Mi_inverse[i])
     while(result > M):
         result = result - M
-    print("Final result:", result, "mod", M)
     return result
 
-def compute_CRT(ai: list, mi: list):
+def compute_CRT(ai: list, mi: list) -> str:
     pairwise_coprime(mi, ai)
     M = modulo_M(mi)
     Mi = modulo_Mi(mi, M)
     Mi_inverse = modulo_Mi_inverse(Mi, mi)
-    CRT_result(ai, Mi, Mi_inverse, M)
+    result = CRT_result(ai, Mi, Mi_inverse, M)
+    return f"Final result: {result} mod {M}\n"
 
 if __name__ == "__main__":
     mi = [7,449]
