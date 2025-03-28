@@ -69,7 +69,7 @@ def compute_CRT(ai: list, mi: list) -> str:
     return f"Final result: {result} mod {M}\n"
 
 if __name__ == "__main__":
-    mi = [7,449]
-    ai = [1, 40]
-    compute_CRT(ai, mi)
+    mi = [16,27]
+    ai = [15,20]
+    print(compute_CRT(ai, mi))
 

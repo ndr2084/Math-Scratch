@@ -45,7 +45,8 @@ def compute_square_root_modulo(mi, ai):
         combination = format(i, f'0{len(ai)}b')
         for j in range(0, len(ai), 1):
             temp.append(ai_total[j][int(combination[j])])
-        print(compute_CRT(temp,mi))
+        print(temp)
+        #print(compute_CRT(temp,mi))
 
 #TODO: doesn't fail gracefully. Do unit testing
 if __name__ == "__main__":

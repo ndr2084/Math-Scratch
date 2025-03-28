@@ -4,7 +4,7 @@ from collections import defaultdict
 def giant_step_interval(n: int) -> int:
     return math.ceil(math.sqrt(n))
 
-def baby_step(g: int, m: int, p, flag: int) -> int:
+def baby_step(g: int, m: int, p, flag: int, d: dict) -> int:
     temp: int = 1
     for i in range(0, m, 1):
         if flag == 1:
@@ -24,7 +24,7 @@ def multiplicative_inverse(a: int, b: int) -> int:
     return b_inverse
 
 
-def giant_step(h: int, p: int, m: int, inverse: int) -> int:
+def giant_step(h: int, p: int, m: int, inverse: int, d: dict) -> int:
     key: int = 0
     inverse_copy = inverse
     for i in range(1, m, 1):
@@ -58,25 +58,30 @@ def extended_euclidean_algorithm_helper(a: int, b: int, s_1: int, s_2: int, t_1:
         return result
     return extended_euclidean_algorithm_helper(a, b, s_2, s_3, t_2, t_3)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    ##NOTE:
-        #KEY := some integer that's congruent to both g^i mod p and congruent to h * (g^-1)^(m*j) mod p
-        #VALUE := the exponents values i and/or m*j
+def calculate_giant_step_baby_step(h: int, p: int, g: int):
     save = 1
     discard = 0
+    d = defaultdict(list)
+    g_inverse: int = multiplicative_inverse(p, g)  # 1st arg m, 2nd arg a
+    print("inverse", g_inverse)
+    m: int = giant_step_interval(p)
+    baby_step(g, m, p, save, d)
+    inverse_remainder: int = baby_step(g_inverse, m, p, discard, d)
+    key: int = giant_step(h, p, m, inverse_remainder, d)
+    print(g, "ˣ ≡", h, "mod", p)
+    print("x = ", sum(d[key]))
+
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    #KEY := some integer that's congruent to both g^i mod p and congruent to h * (g^-1)^(m*j) mod p
+    #VALUE := the exponents values i and/or m*j
 
     ##MODIFY h,g,p BELOW TO CALCULATE ###
     h: int = 2213
     p: int = 3571
     g: int = 650
 
-    d = defaultdict(list)
-    g_inverse: int = multiplicative_inverse(p , g) # 1st arg m, 2nd arg a
-    print("inverse",g_inverse)
-    m: int = giant_step_interval(p)
-    baby_step(g, m, p, save)
-    inverse_remainder: int = baby_step(g_inverse, m, p, discard)
-    key: int = giant_step(h, p, m, inverse_remainder)
-    print(g,"ˣ ≡",h, "mod",p)
-    print("x = ",sum(d[key]))
+    calculate_giant_step_baby_step(h,p,g)
+
+
