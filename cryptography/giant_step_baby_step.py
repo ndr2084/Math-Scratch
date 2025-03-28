@@ -58,18 +58,19 @@ def extended_euclidean_algorithm_helper(a: int, b: int, s_1: int, s_2: int, t_1:
         return result
     return extended_euclidean_algorithm_helper(a, b, s_2, s_3, t_2, t_3)
 
-def calculate_giant_step_baby_step(h: int, p: int, g: int):
+def compute_giant_step_baby_step(h: int, p: int, g: int) -> int:
     save = 1
     discard = 0
     d = defaultdict(list)
     g_inverse: int = multiplicative_inverse(p, g)  # 1st arg m, 2nd arg a
-    print("inverse", g_inverse)
+    #print("inverse", g_inverse)
     m: int = giant_step_interval(p)
     baby_step(g, m, p, save, d)
     inverse_remainder: int = baby_step(g_inverse, m, p, discard, d)
     key: int = giant_step(h, p, m, inverse_remainder, d)
-    print(g, "ˣ ≡", h, "mod", p)
-    print("x = ", sum(d[key]))
+    #print(g, "ˣ ≡", h, "mod", p)
+    #print("x = ", sum(d[key]))
+    return sum(d[key])
 
 
 # Press the green button in the gutter to run the script.
@@ -82,6 +83,6 @@ if __name__ == '__main__':
     p: int = 3571
     g: int = 650
 
-    calculate_giant_step_baby_step(h,p,g)
+    compute_giant_step_baby_step(h,p,g)
 
 
